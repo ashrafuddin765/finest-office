@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@notifyCss;
+
+/* @import 'bootstrap/dist/css/bootstrap.min.css'; */
+
+
+a {
+    color: #493ce4;
+    text-decoration: none;
+}
+
+img{
+    max-width: 100%;
+}
+.site-brand img {
+    width: 158px;
+}
+body {
+    background-color: #F2F3F5;
+}
+
+.gr-employeee-area {
+    padding: 45px 0 90px;
+}
+
+.gr-employe-list-wrap ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.gr-employe-list-wrap ul li {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 14px 20px;
+    margin-bottom: 10px;
+    transition: .4s;
+}
+
+.gr-employe-list-wrap ul li h4 {
+    /* Style for "Farhan Riz" */
+    color: #000000;
+    font-family: Manrope;
+    font-size: 18px;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: left;
+    display: inline-flex;
+    text-decoration: none;
+    margin-bottom: 0;
+}
+
+
+.gr-employe-list-wrap .gr-employee-point {
+    /* Style for "Rectangle" */
+    width: 52px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid #13af10;
+    background-color: rgba(19, 175, 16, 0.09);
+    display: inline-flex;
+    color: #13af10;
+    font-family: Manrope;
+    font-size: 17px;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.gr-employee-title.text-center {
+    margin-bottom: 80px;
+}
+
+.gr-employee-title h1 {
+    /* Style for "Give a rat" */
+    color: #000000;
+    font-family: Manrope;
+    font-size: 42px;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.gr-employee-title p {
+    /* Style for "Make sure" */
+    color: rgba(0, 0, 0, 0.6);
+    font-family: Manrope;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: center;
+}
+
+.employee-list-header .current-month {
+    /* Style for "Month: Nov" */
+    font-family: Manrope;
+    font-weight: 600;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 21px;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+}
+
+.employee-list-header .current-month span {
+    font-weight: 700;
+    color: #000000;
+}
+
+.previus-month-report-link a,.create-employee-link a {
+    /* Style for "Check prev" */
+    color: #493ce4;
+    font-family: Manrope;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: right;
+    text-decoration: none;
+}
+
+
+
+/* login css  */
+.gr-login-area {
+    background-color: #F2F3F5;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gr-login-area form {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 15px;
+}
+
+.gr-login-area label {
+    /* Style for "Email addr" */
+    color: #000000;
+    font-family: Manrope;
+    font-size: 18px;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.gr-login-area form input:not([type=submit]) {
+    /* Style for "BG" */
+
+    height: 55px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    background-color: #ffffff;
+}
+
+.gr-login-area form input[type=submit] {
+    /* Style for "BG" */
+    border-radius: 6px;
+    background-color: #493ce4;
+    width: 100%;
+    height: 54px;
+    /* Style for "Login" */
+    color: #ffffff;
+    font-family: Manrope;
+    font-size: 15px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 2px;
+    line-height: normal;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.gr-login-area h3 {
+    /* Style for "Login" */
+    color: #000000;
+    font-family: Manrope;
+    font-size: 42px;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: center;
+}
+
+.gr-login-area .login-title p {
+    /* Style for "You need t" */
+    color: rgba(0, 0, 0, 0.6);
+    font-family: Manrope;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: center;
+}
+
+.gr-login-area .login-title {
+    margin-bottom: 50px;
+}
+
+
+.create-employee-area {
+    padding: 100px 0;
+    height: auto;
+}
+/* 
+.update-form input[type="submit"] {
+
+    border-radius: 6px;
+    background-color: #493ce4;
+    display: inline-block;
+    padding: 13px 40px;
+    color: #ffffff;
+    font-family: Manrope;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 2px;
+    line-height: normal;
+    text-align: center;
+    text-transform: uppercase;
+    border: none;
+} */
+
+.update-form input.edit-point {
+    width: 50px;
+    height: 39px;
+    border: none;
+    outline: none !important;
+}
+
+.logut-link.text-right a {
+    /* Style for "Logout" */
+    color: #e12626;
+    font-family: Manrope;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: right;
+}
+
+.header-area {
+    padding: 20px 15px;
+}
+
+
+.gr-employe-list-wrap span.gr-employee-point.red {/* Style for "Rectangle" */
+    border: 2px solid #e12626;
+    background-color: rgba(225, 38, 38, 0.09);
+    color: #e12626;
+}
+
+.gr-employe-list-wrap span.gr-employee-point.yellow {
+    background-color: #dcdc651c;
+    border-color: #b5b52a;
+    color: #b5b52a;
+}
+
+.update-form .edit-point {
+    border: 1px solid #ccccccd6!important;
+    text-align: center;
+}
+
+.gr-employee-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.gr-employe-list-wrap .employe-name {
+    margin-left: 22px;
+}
+
+.gr-employe-list-wrap span.last-updated {
+    display: block;
+    font-size: 14px;
+    color: #adadad;
+    font-weight: 400;
+}
+.gr-employe-list-wrap ul li:hover {
+    box-shadow: 0 5px 40px #00000017;
+}
+
+.btn {
+    background-color: #493ce4;
+    @apply  text-white px-6 py-2 rounded inline-block text-center
+}
