@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Spatie\Browsershot\Browsershot;
 
 class LeaderboardController extends Controller {
     /**
@@ -21,7 +20,7 @@ class LeaderboardController extends Controller {
         //
         $leaderboard = Leaderboard::where( 'status', '1' )->whereMonth( 'created_at', date( 'm' ) )->whereYear( 'created_at', date( 'Y' ) )->select( 'user_id',
             DB::raw( "sum(points) as total_point" )
-        )->groupBy( 'user_id' )->orderBy( 'total_point', 'desc' )->paginate( 5 );
+        )->groupBy( 'user_id' )->orderBy( 'total_point', 'desc' )->paginate( 20 );
 
         // $unique_leaderboard = $this->paginate($unique_leaderboard);
         return view( 'leaderboard.index', [
@@ -29,9 +28,10 @@ class LeaderboardController extends Controller {
             'leaderboard'   => $this,
         ] );
     }
+
     public function pendingRequestList() {
-        if( Auth()->user()->role != 'admin' ){
-            return redirect()->intended('dashboard');
+        if ( Auth()->user()->role != 'admin' ) {
+            return redirect()->intended( 'dashboard' );
         }
         //
         $leaderboard = Leaderboard::where( 'status', '0' )->paginate( 5 );
@@ -39,7 +39,8 @@ class LeaderboardController extends Controller {
         // $unique_leaderboard = $this->paginate($unique_leaderboard);
         return view( 'leaderboard.pending-points', [
             'office_report' => $leaderboard,
-            'leaderboard'   => $this,
+            'self_obj'   => $this,
+
         ] );
     }
 
@@ -71,17 +72,20 @@ class LeaderboardController extends Controller {
         return view( 'leaderboard.request' );
     }
 
-    // public function generatePDF() {
+// is requested in same day
+    public function isRequestedSameDay( $id, $date ) {
 
-    //     $last_month = date( 'F - Y', strtotime( "first day of previous month" ) );
-    //     Browsershot::url( 'http://finest-office.test' )->save( public_path( 'storage/reports/' . $last_month . '.pdf' ) );
+        return Leaderboard::where( 'user_id', $id )->whereDate( 'created_at', $date )->get();
 
-    // }
+
+       
+    }
 
     public function oldReports( Request $request ) {
 
-        $user        = User::latest()->get();
-        $leaderboard = Leaderboard::where( 'status', '1' );
+        $user          = User::latest()->get();
+        $leaderboard   = Leaderboard::where( 'status', '1' );
+        $leaderboard_s = Leaderboard::where( 'status', '1' );
 
         if ( '' != $request->employee ) {
             $leaderboard = $leaderboard->where( 'user_id', $request->employee );
@@ -94,9 +98,10 @@ class LeaderboardController extends Controller {
         $leaderboard = $leaderboard->get();
 
         return view( 'leaderboard.previous-reports', [
-            'users'    => $user,
-            'reports'  => $leaderboard,
-            'self_obj' => $this,
+            'users'         => $user,
+            'reports'       => $leaderboard,
+            'self_obj'      => $this,
+            'leaderboard_s' => $leaderboard_s,
 
         ] );
 
@@ -125,6 +130,12 @@ class LeaderboardController extends Controller {
             'points'  => 'required',
         ] );
 
+        $date = date( 'Y-m-d');
+        if($this->isRequestedSameDay($request['user_id'], $date)->count() >= 2){
+            notify()->error( 'You reached your daily limit!' );
+            return back();
+        }
+
         $officeReport          = new Leaderboard();
         $officeReport->user_id = $request['user_id'];
         $officeReport->points  = $request['points'];
@@ -132,7 +143,7 @@ class LeaderboardController extends Controller {
 
         $officeReport->save();
 
-        notify()->success('Point requested!');
+        notify()->success( 'Point requested!' );
         return back();
     }
 
@@ -171,7 +182,6 @@ class LeaderboardController extends Controller {
         //
         $leaderboard = Leaderboard::findOrFail( $id );
 
-
         if ( isset( $request['approve'] ) ) {
             $leaderboard->status     = 1;
             $leaderboard->updated_by = auth()->user()->name;
@@ -180,7 +190,7 @@ class LeaderboardController extends Controller {
             $leaderboard->delete();
         }
 
-        notify()->success('Point updated!');
+        notify()->success( 'Point updated!' );
         return back();
     }
 
@@ -204,7 +214,7 @@ class LeaderboardController extends Controller {
             'updated_by' => auth()->user()->name,
         ] );
 
-        notify()->success('All pending request has been approved!');
+        notify()->success( 'All pending request has been approved!' );
         return back();
     }
 

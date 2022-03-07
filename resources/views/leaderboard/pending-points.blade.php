@@ -29,7 +29,8 @@
 
                             <div class="previus-month-report-link">
                                 <a href="{{ route('approve-all') }}"
-                                    onclick="return confirm('Do you want to approve all pending request?')">Approve all</a>
+                                    onclick="return confirm('Do you want to approve all pending request?')">Approve
+                                    all</a>
                             </div>
 
                         </div>
@@ -37,9 +38,9 @@
                             @if (count($office_report) > 0)
                                 @foreach ($office_report as $report)
                                     @php
-                                        
+                                        $isRequestedSameDay = $self_obj->isRequestedSameDay($report->user_id, date('Y-m-d', strtotime($report->created_at)))->count() > 1;
                                         $total_points = $report->points;
-                                        
+
                                         if ($total_points > 0 && $total_points <= 2) {
                                             $point_class = 'green';
                                         } elseif ($total_points < 0) {
@@ -47,18 +48,21 @@
                                         } else {
                                             $point_class = 'yellow';
                                         }
-                                    @endphp
+
+                                        $point_class = $isRequestedSameDay ? 'orange' : $point_class;
+
+                                        @endphp
 
                                     <li class="flex justify-between align-center">
-                                        <div class="gr-employee-meta">
-                                            <span class="gr-employee-point {{ $point_class }}"> {{ $total_points }}
+                                        <div class="gr-employee-meta ">
+                                            <span class="gr-employee-point  {{ $point_class }}"> {{ $total_points }}
                                             </span>
                                             <div class="employe-name">
                                                 <h4>{{ $report->users->name }}</h4>
                                                 <span class="last-updated">
                                                     {{-- {{ $leaderboard->splitName($report['updated_by'])[0] }} --}}
                                                     Requsted
-                                                    {{ $leaderboard->getTImeAgo(strtotime($report['updated_at'])) }}</span>
+                                                    {{ $self_obj->getTImeAgo(strtotime($report['updated_at'])) }}</span>
                                             </div>
                                         </div>
 
@@ -70,9 +74,12 @@
                                                 <div class="edit-field-wrap">
 
 
-                                                    <input class="bg-green-600 font-bold py-2 px-4 text-sm rounded text-white" type="submit" value="Approve"
-                                                        name="approve">
-                                                    <input class="bg-red-500 font-bold inline py-2 px-4 text-sm rounded text-white" type="submit" value="Reject" name="reject">
+                                                    <input
+                                                        class="bg-green-600 font-bold py-2 px-4 text-sm rounded text-white"
+                                                        type="submit" value="Approve" name="approve">
+                                                    <input
+                                                        class="bg-red-500 font-bold inline py-2 px-4 text-sm rounded text-white"
+                                                        type="submit" value="Reject" name="reject">
                                                 </div>
                                             </form>
                                         @endif

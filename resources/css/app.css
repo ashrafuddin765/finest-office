@@ -284,6 +284,11 @@ body {
     border-color: #b5b52a;
     color: #b5b52a;
 }
+.gr-employe-list-wrap span.gr-employee-point.orange {
+    background-color: #dcdc651c;
+    border-color: orange;
+    color: orange;
+}
 
 .update-form .edit-point {
     border: 1px solid #ccccccd6!important;

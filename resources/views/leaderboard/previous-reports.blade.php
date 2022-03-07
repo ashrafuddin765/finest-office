@@ -5,7 +5,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Previous reports') }}
             </h2>
-     
+
         </div>
     </x-slot>
 
@@ -64,12 +64,21 @@
 
                                 <thead>
                                     <th class="border px-4 py-2">Date</th>
+                                    <th class="border px-4 py-2">Name</th>
                                     <th class="border px-4 py-2">Point</th>
                                     <th class="border px-4 py-2">Approved by</th>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        
+                                    @endphp
                                     @foreach ($reports as $item)
                                         @php
+                                            
+                                            $date = date('d-m-Y', strtotime($item->created_at));
+                                            $isRequestedSameDay = $self_obj->isRequestedSameDay($item->user_id, date('Y-m-d', strtotime($item->created_at)))->count() > 1;
+                                            $date_class = $isRequestedSameDay ? 'text-orange-500' : '';
+
                                             if ($item->points > 0 && $item->points <= 2):
                                                 $point_class = 'text-green-500';
                                             elseif ($item->points < 0):
@@ -77,16 +86,22 @@
                                             else:
                                                 $point_class = 'text-yellow-400';
                                             endif;
+                                            
                                         @endphp
 
-                                        <tr>
+                                        <tr class="{{ $date_class }}">
                                             <td class="border px-4 py-2 ">
                                                 {{ date('d/m/Y', strtotime($item->updated_at)) }}
                                             </td>
-                                            <td class="border px-4 py-2 font-bold {{ $point_class }}">{{ $item->points }}</td>
+                                            <td class="border px-4 py-2 ">
+                                                {{ $item->users->name }}
+                                            </td>
+                                            <td class="border px-4 py-2 font-bold {{ $point_class }}">
+                                                {{ $item->points }}</td>
                                             <td class="border px-4 py-2">{{ $item->updated_by }}</td>
                                         </tr>
                                     @endforeach
+
                                 </tbody>
                             </table>
                         </div>

@@ -21,7 +21,7 @@ class HomeController extends Controller
 
         $leaderboard = Leaderboard::where( 'status', '1' )->whereMonth( 'created_at', date( 'm' ) )->whereYear( 'created_at', date( 'Y' ) )->select( 'user_id',
             DB::raw( "sum(points) as total_point" )
-        )->groupBy( 'user_id' )->orderBy( 'total_point', 'desc' )->paginate( 5 );
+        )->groupBy( 'user_id' )->orderBy( 'total_point', 'desc' )->paginate( 20 );
 
         // $unique_leaderboard = $this->paginate($unique_leaderboard);
         return view( 'welcome', [
