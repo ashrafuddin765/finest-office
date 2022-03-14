@@ -26,13 +26,13 @@
                             <div class="current-month">
                                 <p> <span>{{ date('F, Y') }} </span></p>
                             </div>
-
+                            @if ( 'admin' == Auth::user()->role)
                             <div class="previus-month-report-link">
                                 <a href="{{ route('approve-all') }}"
                                     onclick="return confirm('Do you want to approve all pending request?')">Approve
                                     all</a>
                             </div>
-
+                            @endif
                         </div>
                         <ul>
                             @if (count($office_report) > 0)
@@ -66,7 +66,7 @@
                                             </div>
                                         </div>
 
-                                        @if ($report->user_id === Auth::user()->id || 'admin' == Auth::user()->role)
+                                        @if ( 'admin' == Auth::user()->role)
                                             <form action="{{ route('dashboard.update', $report->id) }}" method="post"
                                                 class="update-form">
                                                 @csrf

@@ -31,17 +31,24 @@ class LeaderboardController extends Controller {
 
     public function pendingRequestList() {
         if ( Auth()->user()->role != 'admin' ) {
-            return redirect()->intended( 'dashboard' );
+            $leaderboard = Leaderboard::where( 'status', '0' )->where( 'user_id', Auth()->user()->id )->paginate( 20 );
+
+            // $unique_leaderboard = $this->paginate($unique_leaderboard);
+            return view( 'leaderboard.pending-points', [
+                'office_report' => $leaderboard,
+                'self_obj'      => $this,
+
+            ] );
         }
-        //
-        $leaderboard = Leaderboard::where( 'status', '0' )->paginate( 5 );
+        $leaderboard = Leaderboard::where( 'status', '0' )->paginate( 20 );
 
         // $unique_leaderboard = $this->paginate($unique_leaderboard);
         return view( 'leaderboard.pending-points', [
             'office_report' => $leaderboard,
-            'self_obj'   => $this,
+            'self_obj'      => $this,
 
         ] );
+
     }
 
     public function pendingRequestReminder() {
@@ -77,8 +84,6 @@ class LeaderboardController extends Controller {
 
         return Leaderboard::where( 'user_id', $id )->whereDate( 'created_at', $date )->get();
 
-
-       
     }
 
     public function oldReports( Request $request ) {
@@ -130,8 +135,10 @@ class LeaderboardController extends Controller {
             'points'  => 'required',
         ] );
 
-        $date = date( 'Y-m-d');
-        if($this->isRequestedSameDay($request['user_id'], $date)->count() >= 2){
+
+
+        $date = date( 'Y-m-d' );
+        if ( $this->isRequestedSameDay( $request['user_id'], $date )->count() >= 2 ) {
             notify()->error( 'You reached your daily limit!' );
             return back();
         }
@@ -179,6 +186,11 @@ class LeaderboardController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update( Request $request, $id ) {
+
+        if ( Auth()->user()->role != 'admin' ) {
+            notify()->error( 'You are not authorized to perform this action' );
+            return back();
+        }
         //
         $leaderboard = Leaderboard::findOrFail( $id );
 
@@ -207,7 +219,10 @@ class LeaderboardController extends Controller {
     public function approveAll( $id = false ) {
         //
         Auth::check();
-
+        if ( Auth()->user()->role != 'admin' ) {
+            notify()->error( 'You are not authorized to perform this action' );
+            return back();
+        }
         $leaderboard = Leaderboard::where( 'status', '0' );
         $leaderboard->update( [
             'status'     => 1,

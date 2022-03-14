@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel {
         // $schedule->job(LeaderbardPDFGenerator::dispatch())->everyMinute();
 
         if ( $leaderboard->count() > 0 ) {
-            $schedule->job( PendingPointReminder::dispatch() )->dailyAt( '05:40' );
+            $schedule->job( PendingPointReminder::dispatch() )->dailyAt( '11:00' );
         }
 
     }

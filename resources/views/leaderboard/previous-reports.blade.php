@@ -91,7 +91,7 @@
 
                                         <tr class="{{ $date_class }}">
                                             <td class="border px-4 py-2 ">
-                                                {{ date('d/m/Y', strtotime($item->updated_at)) }}
+                                                {{ date('d/m/Y', strtotime($item->created_at)) }}
                                             </td>
                                             <td class="border px-4 py-2 ">
                                                 {{ $item->users->name }}

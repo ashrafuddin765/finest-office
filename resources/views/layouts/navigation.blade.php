@@ -18,11 +18,11 @@
                     <x-nav-link :href="route('request-form')" :active="request()->routeIs('request-form')">
                         {{ __('Point Request') }}
                     </x-nav-link>
-                    @if (Auth::user()->role === 'admin')
+
                         <x-nav-link :href="route('pending-request')" :active="request()->routeIs('pending-request')">
                             {{ __('Pending points') }}
                         </x-nav-link>
-                    @endif
+
                 </div>
             </div>
 
