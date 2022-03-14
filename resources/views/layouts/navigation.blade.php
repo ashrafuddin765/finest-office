@@ -16,7 +16,8 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('request-form')" :active="request()->routeIs('request-form')">
-                        {{ __('Point Request') }}
+                        {{ __('Point Request')  }}
+
                     </x-nav-link>
 
                         <x-nav-link :href="route('pending-request')" :active="request()->routeIs('pending-request')">

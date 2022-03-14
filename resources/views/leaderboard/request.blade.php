@@ -20,6 +20,7 @@
                 <div class="">
                     <div class="gr-employee-title text-center">
                         <h1>Request Point</h1>
+                        <span class="text-red-500">You have requested {{ $request_count. '/2'}}</span>
                     </div>
                     <form action="{{ route('dashboard.store') }}" method="POST" class="create-employee-form">
                         @csrf

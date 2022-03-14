@@ -76,7 +76,11 @@ class LeaderboardController extends Controller {
     }
 
     public function requestForm() {
-        return view( 'leaderboard.request' );
+        $date = date( 'Y-m-d' );
+        $request_count = $this->isRequestedSameDay( Auth()->user()->id, $date )->count();
+
+        return view( 'leaderboard.request', ['request_count' => $request_count] );
+
     }
 
 // is requested in same day
@@ -134,8 +138,6 @@ class LeaderboardController extends Controller {
             'user_id' => 'required',
             'points'  => 'required',
         ] );
-
-
 
         $date = date( 'Y-m-d' );
         if ( $this->isRequestedSameDay( $request['user_id'], $date )->count() >= 2 ) {
