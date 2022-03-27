@@ -76,7 +76,7 @@ class LeaderboardController extends Controller {
     }
 
     public function requestForm() {
-        $date = date( 'Y-m-d' );
+        $date          = date( 'Y-m-d' );
         $request_count = $this->isRequestedSameDay( Auth()->user()->id, $date )->count();
 
         return view( 'leaderboard.request', ['request_count' => $request_count] );
@@ -258,5 +258,33 @@ class LeaderboardController extends Controller {
         $last_name  = strpos( $name, ' ' ) === false ? '' : preg_replace( '#.*\s([\w-]*)$#', '$1', $name );
         $first_name = trim( preg_replace( '#' . preg_quote( $last_name, '#' ) . '#', '', $name ) );
         return [$first_name, $last_name];
+    }
+
+    //winner
+    public function winner() {
+        // get current month leaderboard
+        $leaderboard = Leaderboard::where( 'status', '1' )->whereMonth( 'created_at', date( 'm' ) )->whereYear( 'created_at', date( 'Y' ) )->select( 'user_id',
+            DB::raw( "sum(points) as total_point" )
+        )->groupBy( 'user_id' )->orderBy( 'total_point', 'desc' )->paginate( 20 );
+
+        $user = User::all();
+
+        //check if top balues is the same
+        $top_points = $leaderboard->first()->total_point;
+        $top_users  = [];
+        foreach ( $leaderboard as $key => $value ) {
+            if ( $value->total_point == $top_points ) {
+                $top_users[] = $value->user_id;
+            }
+        }
+
+        // select a winner from top users
+        $winner = $leaderboard->whereIn( 'user_id', $top_users )->random();
+
+
+        return view( 'leaderboard.winner', [
+            'leaderboard' => $leaderboard,
+            'user'        => $user,
+        ] );
     }
 }

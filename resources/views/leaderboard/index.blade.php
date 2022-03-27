@@ -69,23 +69,6 @@
                                                     {{ $leaderboard->getTImeAgo(strtotime($leaderboard->getLastUpdatedData($report->user_id)->updated_at)) }}</span>
                                             </div>
                                         </div>
-                                        {{-- @if ($report->user_id === Auth::user()->id || 'admin' == Auth::user()->role)
-
-                                        <form action="{{ route('dashboard.store', $report->user_id) }}" method="POST"
-                                            class="update-form">
-                                            @csrf
-                                            @method('post')
-                                            <div class="edit-field-wrap">
-                                                <input type="hidden" name="updated_by"
-                                                    value="{{ Auth::user()->name }}">
-                                                <input type="hidden" name="points" value="{{ $total_points }}">
-                                                <input type="hidden" name="user_id" value="{{ $report->user_id }}">
-                                                <input type="number" value="0" step="0.5" name="points"
-                                                    class='edit-point'>
-                                                <input type="submit" value="Submit">
-                                            </div>
-                                        </form>
-                                    @endif --}}
 
                                     </li>
                                 @endforeach
